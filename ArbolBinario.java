@@ -51,7 +51,29 @@ class ArbolBin{
         return;
     }
 
+    public static LceDevuelta calcLce(ArbolBin t){
+        LceDevuelta respL, respR;
+        LceDevuelta resp = new LceDevuelta();
+
+        if(ArbolBin.raiz(t) == ArbolBin.nil){
+            resp.lce = 0;
+            resp.numExt = 1;
+        } else {
+            respL = calcLce(ArbolBin.subArbolIzq(t));
+            respR = calcLce(ArbolBin.subArbolDer(t));
+            resp.lce = respL.lce + respR.lce + respR.numExt + respL.numExt;
+            resp.numExt = respL.numExt + respR.numExt;
+        }
+        return LceDevuelta;
+    }
+
 }
+
+class LceDevuelta{
+    int lce;
+    int numExt;
+}
+
 
 public class ArbolBinario {
     public static void main(String[] args){

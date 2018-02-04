@@ -16,6 +16,17 @@ public class Busquedas{
         return res;
     }
 
+    public static int busquedaSecuencialRecursiva(int[] arreglo, int m, int num, int k){
+        int respuesta;
+        if(m >= num)
+            respuesta = -1;
+        else if (arreglo[m] == k)
+            respuesta = m;
+        else
+            respuesta = busquedaSecuencialRecursiva(arreglo, m+1, num, k);
+        return respuesta;
+    }
+
     public static void busquedaBinaria(int[] arreglo, int elemento){
         System.out.println(busquedaBinariaRecursiva(arreglo, 0, arreglo.length-1, elemento));
         System.out.println(busquedaBinariaIterativa(arreglo, 0, arreglo.length-1, elemento));
