@@ -39,7 +39,7 @@ public class MergeSort{
 
     public static void mergeSort(Elemento[] E, int primero, int ultimo){
         if(primero < ultimo){
-            int medio = (primero+ultimo)/2;
+            int medio = primero + (ultimo - primero)/2;
             mergeSort(E, primero, medio);
             mergeSort(E, medio+1, ultimo);
             fusionarConMerge(E, primero, medio, ultimo);
@@ -47,43 +47,30 @@ public class MergeSort{
     }
 
     public static void fusionarConMerge(Elemento[] E, int primero, int medio, int ultimo){
-        int i, finalPrimero, num_elements, tmp_pos;
+        int i, j, k;
         Elemento[] temp = new Elemento[E.length];
-        finalPrimero = medio - 1;
-        tmp_pos = primero;
-        num_elements = ultimo - primero + 1;
-        while ((primero <= finalPrimero) && (medio <= ultimo)) {
+        for(i = primero; i <= ultimo; i++){
+            temp[i] = E[i];
+        }
+        i = primero;
+        j = medio + 1;
+        k = primero;
+        while(i <= medio && j <= ultimo){
             MergeSort.comparaciones++;
-            if (E[primero].clave.valor < E[medio].clave.valor) {
-                temp[tmp_pos] = E[primero];
-                tmp_pos++;
-                primero++;
+            if(temp[i].clave.valor <= temp[j].clave.valor){
+                E[k] = temp[i];
+                i++;
             } else {
-                temp[tmp_pos] = E[medio];
-                tmp_pos++;
-                medio++;
+                E[k] = temp[j];
+                j++;
             }
+            k++;
         }
-        
-        if(primero >= finalPrimero){
-            for(i = medio; i <= ultimo; i++, tmp_pos++){
-                temp[tmp_pos] = E[i];
-            }
-        } else {
-            for(i = primero; i <= finalPrimero; i++, tmp_pos++){
-                temp[tmp_pos] = E[i];
-            }
-        }
-        
-        for(i = 0; i < temp.length; i++){
-            if(temp[i] != null)
-                System.out.print(temp[i].clave.valor+" ");
-        }
-        System.out.println();
-
-        for (i = 0; i < num_elements; i++, ultimo--) {
-            E[ultimo] = temp[ultimo];
-        }        
+        while(i <= medio){
+            E[k] = temp[i];
+            k++;
+            i++;
+        }    
     }
 
     public static void fusionar(Elemento[] A, int k, Elemento[] B, int m, Elemento[] C){
