@@ -4,7 +4,7 @@ class ListaArboles{
     public static final ListaArboles nil = null;
     
     public static Arbol primero(ListaArboles l){
-        return Arbol.construirArbol(l.elemento, ListaArboles.nil);
+        return Arbol.construirArbol(l.elemento, Arbol.nil, ListaArboles.nil);
     }
 
     public static ListaArboles cons(int nuevoElemento, ListaArboles listaVieja){
@@ -35,12 +35,14 @@ class ListaArboles{
 
 class Arbol{
     Object raiz;
+    Arbol hijo;
     ListaArboles subarboles;
     public static final Arbol nil = null;
 
-    public static Arbol construirArbol(Object raiz, ListaArboles viejosArboles){
+    public static Arbol construirArbol(Object raiz, Arbol hijo, ListaArboles viejosArboles){
         Arbol ar = new Arbol();
         ar.raiz = raiz;
+        ar.hijo = hijo;
         ar.subarboles = viejosArboles;
         return ar;
     }
@@ -62,6 +64,7 @@ class Arbol{
             recorrerPreOrden(subArbol);
             quedanSubArboles = ListaArboles.resto(quedanSubArboles);
         }
+        recorrerPreOrden(T.hijo);
         return;
     }
 
@@ -95,7 +98,7 @@ public class ArbolGeneral{
     public static void main(String[] args){
         ListaArboles lista1 = ListaArboles.cons(1, ListaArboles.nil);
         ListaArboles lista2 = ListaArboles.cons(2, lista1);
-        Arbol arbol1 = Arbol.construirArbol(3, lista2);
+        Arbol arbol1 = Arbol.construirArbol(3, Arbol.nil,lista2);
         Arbol.recorrerInOrden(arbol1);
         Arbol.recorrerPreOrden(arbol1);
         Arbol.recorrerPosOrden(arbol1);

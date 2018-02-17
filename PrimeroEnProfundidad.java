@@ -344,4 +344,76 @@ public class PrimeroEnProfundidad{
         return cfc;
     }
 
+    public static int dfsNoDirigido(ListaInt[] verticesAdya, int[] color, int v, int p){
+        int w;
+        ListaInt adyaRest;
+        int respuesta;
+        color[v] = Color.GRIS;
+        adyaRest = verticesAdya[v];
+        while(adyaRest != ListaInt.nil){
+            w = ListaInt.primero(adyaRest);
+            if(color[w] == Color.BLANCO){
+                int wResp = dfs(verticesAdya, color, w);
+            } else if (color[w] == Color.GRIS && w != p){
+
+            }
+            adyaRest = ListaInt.resto(adyaRest);
+        }
+        color[v] = Color.NEGRO;
+        return respuesta; 
+    }
+
+    //Vertices de Adyacencia iniciando en el arreglo desde la posición 1
+    public static int tiempo;
+    public static Integer[] tiempoDescubrir;
+    public static PilaInt pilaAristas;
+
+    public static void bicomponentes(ListaInt[] verticesAdya, int n){
+        int v;
+        int[] color = new int[n+1];
+        tiempoDescubrir = new Integr[n+1];
+        for(v = 0; v < n+1; v++){
+            color[v] = Color.BLANCO;
+            tiempoDescubrir[v] = null;
+        }
+        tiempo = 0;
+        pilaAristas = PilaInt.crear(n);
+        for(v = 1; v <= n; v++){
+            if(color[v] == Color.BLANCO)
+                bicompDFS(verticesAdya, color, v, -1);
+        }
+        return;
+    }
+
+    public static int bicompDFS(ListaInt[] verticesAdya, int[] color, int v, int p){
+        int w;
+        ListaInt adyaRest;
+        int retro;
+        color[v] = Color.GRIS;
+        tiempo++;
+        tiempoDescubrir[v] = tiempo;
+        retro = tiempoDescubrir[v];
+        adyaRest = verticesAdya[v];
+        while(adyaRest != ListaInt.nil){
+            w = ListaInt.primero(adyaRest);
+            if(color[w] == Color.BLANCO){
+                //PilaInt.push(pila, vw);
+                int wRetro = bicompDFS(verticesAdya, color, w, v);
+                if(wRetro >= tiempoDescubrir[v]){
+
+                }
+                retro = min(retro, wRetro);
+            } else if(color[w] == Color.GRIS && w != p){
+                //PilaInt.push(pila, vw);
+                retro = min(tiempoDescubrir[w], retro);
+            }
+            adyaRest = PilaInt.resto(adyaRest);
+        }
+        tiempo++;
+        tiempoDescubrir[v] = tiempo;
+        color[v] = Color.NEGRO;
+        return retro;
+    }
+
+
 }
